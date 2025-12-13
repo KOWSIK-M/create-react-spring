@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-01-13
+
+### ✨ Added
+
+#### Database Support
+- **Database selection**: H2, PostgreSQL, MySQL, or None
+- **Auto-configuration**: application.properties generated with database-specific settings
+- **JPA Integration**: spring-boot-starter-data-jpa automatically added when database is selected
+- **Sample entities**: User entity with JPA annotations (for all languages)
+- **Sample repository**: UserRepository extending JpaRepository
+- **Database drivers**: Automatic dependency injection for selected database
+  - H2: com.h2database:h2
+  - PostgreSQL: org.postgresql:postgresql
+  - MySQL:com.mysql:mysql-connector-j
+
+#### Configuration Improvements
+- **Spring Boot version selection**: Choose between 3.2.1, 3.1.7, or 3.0.13
+- **Input validation**: groupId now validated against Java package naming conventions
+- **Project name validation**: Ensures valid project names (alphanumeric, dashes, underscores)
+
+### 🔧 Improved
+- Enhanced binary file detection (from 6 to 30+ file extensions)
+- Cleaner code with better documentation
+- Dynamic application class name handling
+- Better error messages for validation failures
+
+### 📚 Documentation
+- Updated HELP.md template with database setup instructions
+- Docker commands for PostgreSQL and MySQL
+- H2 console access information
+- Database connection troubleshooting
+
+---
+
 ## [1.0.0] - 2025-01-12
 
 ### 🎉 Initial Release

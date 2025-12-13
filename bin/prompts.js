@@ -105,6 +105,18 @@ export const questions = [
     ]
   },
   {
+    type: "list",
+    name: "database",
+    message: "Select Database:",
+    choices: [
+      { name: "H2 (In-Memory, Development/Testing)", value: "h2" },
+      { name: "PostgreSQL (Production)", value: "postgresql" },
+      { name: "MySQL (Production)", value: "mysql" },
+      { name: "None (Manual configuration)", value: "none" }
+    ],
+    default: "h2"
+  },
+  {
     type: "input",
     name: "groupId",
     message: "Group ID (e.g., com.mycompany):",

@@ -43,3 +43,24 @@ Desktop.ini
 config-test/
 myapp/
 test-war/
+
+# Generated test artifacts and build outputs
+test-run/
+test-projects/
+
+# Backend build outputs
+**/server/target/
+**/server/build/
+
+# Frontend build / dependencies
+**/client/dist/
+**/client/build/
+**/client/node_modules/
+
+# Maven / Gradle caches (local)
+.m2/
+.gradle/
+
+# OS temp
+*.class
+*.log
