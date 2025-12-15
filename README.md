@@ -54,16 +54,10 @@
 
 ### Installation
 
-You don't need to install anything globally. Just run:
+Run directly with npx (no global install needed):
 
 ```bash
-npx create-react-spring
-```
-
-Or specify a project name directly:
-
-```bash
-npx create-react-spring my-awesome-app
+npx create-react-spring [project-name]
 ```
 
 ### Interactive Setup
