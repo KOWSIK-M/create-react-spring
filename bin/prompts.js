@@ -117,6 +117,12 @@ export const questions = [
     default: "h2"
   },
   {
+    type: "confirm",
+    name: "security",
+    message: "Add Spring Security?",
+    default: false
+  },
+  {
     type: "input",
     name: "groupId",
     message: "Group ID (e.g., com.mycompany):",

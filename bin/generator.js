@@ -316,6 +316,46 @@ function processBackendFiles(
           );
         }
 
+        // Add Security dependencies for Maven
+        if (answers.security && item === "pom.xml") {
+          const securityDeps = `
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>`;
+          
+          content = content.replace(
+            "</dependencies>",
+            `${securityDeps}\n	</dependencies>`
+          );
+        }
+
+        // Add Security dependencies for Gradle
+        if (
+          answers.security &&
+          (item === "build.gradle" || item === "build.gradle.kts")
+        ) {
+          const isKotlinDsl = item === "build.gradle.kts";
+          let securityDeps = "";
+
+          if (isKotlinDsl) {
+            securityDeps = `\timplementation("org.springframework.boot:spring-boot-starter-security")\n\ttestImplementation("org.springframework.security:spring-security-test")\n`;
+          } else {
+            securityDeps = `\timplementation 'org.springframework.boot:spring-boot-starter-security'\n\ttestImplementation 'org.springframework.security:spring-security-test'\n`;
+          }
+
+          content = content.replace(
+            "dependencies {",
+            `dependencies {\n${securityDeps}`
+          );
+        }
+
         // Add WAR support for Gradle
         if (
           answers.packaging === "war" &&
@@ -344,6 +384,16 @@ function processBackendFiles(
   // Create ServletInitializer for WAR packaging
   if (answers.packaging === "war") {
     createServletInitializer(dest, answers, packageName, packagePath);
+  }
+
+  // Configure Security (if selected)
+  if (answers.security) {
+     console.log(
+        chalk.blue(
+          `   - Security: enabled -> adding Spring Security...`
+        )
+      );
+    configureSecurityForProject(dest, answers, packageName, packagePath);
   }
 }
 
@@ -466,6 +516,7 @@ Generated with **create-react-spring**.
   - **Artifact**: ${artifactId}
   - **Java**: ${answers.javaVersion}
   - **Packaging**: ${answers.packaging.toUpperCase()}
+  - **Security**: ${answers.security ? "Enabled" : "Disabled"}
 
 ## Getting Started
 
@@ -530,6 +581,120 @@ function configureDatabaseForProject(
 
   // 3. Add sample UserRepository
   createSampleRepository(serverDir, answers, packageName, packagePath);
+}
+
+/**
+ * Configure Spring Security for the project
+ */
+function configureSecurityForProject(
+  serverDir,
+  answers,
+  packageName,
+  packagePath
+) {
+  const sourceRoot =
+    answers.backend === "kotlin"
+      ? "kotlin"
+      : answers.backend === "groovy"
+      ? "groovy"
+      : "java";
+  const configDir = path.join(
+    serverDir,
+    `src/main/${sourceRoot}`,
+    ...packagePath.split("/"),
+    "config"
+  );
+  fs.ensureDirSync(configDir);
+
+  let content = "";
+  const fileExtension =
+    answers.backend === "kotlin"
+      ? "kt"
+      : answers.backend === "groovy"
+      ? "groovy"
+      : "java";
+
+    if (answers.backend === "java") {
+    content = `package ${packageName}.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.security.config.Customizer.withDefaults;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests((authz) -> authz
+                .anyRequest().authenticated()
+            )
+            .httpBasic(withDefaults())
+            .csrf(csrf -> csrf.disable()); // Disabled for easier API testing
+        return http.build();
+    }
+}
+`;
+  } else if (answers.backend === "kotlin") {
+    content = `package ${packageName}.config
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.config.Customizer.withDefaults
+
+@Configuration
+@EnableWebSecurity
+class SecurityConfig {
+
+    @Bean
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http
+            .authorizeHttpRequests { authz ->
+                authz.anyRequest().authenticated()
+            }
+            .httpBasic(withDefaults())
+            .csrf { it.disable() } // Disabled for easier API testing
+        return http.build()
+    }
+}
+`;
+  } else if (answers.backend === "groovy") {
+    content = `package ${packageName}.config
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.SecurityFilterChain
+import static org.springframework.security.config.Customizer.withDefaults
+
+@Configuration
+@EnableWebSecurity
+class SecurityConfig {
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests { authz ->
+                authz.anyRequest().authenticated()
+            }
+            .httpBasic(withDefaults())
+            .csrf { csrf -> csrf.disable() } // Disabled for easier API testing
+        return http.build()
+    }
+}
+`;
+  }
+
+  fs.writeFileSync(path.join(configDir, `SecurityConfig.${fileExtension}`), content);
 }
 
 /**

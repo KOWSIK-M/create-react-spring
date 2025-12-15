@@ -2,6 +2,12 @@
 config-test/
 myapp/
 test-war/
+test-run/
+test-run-security/
+
+# Test scripts
+test-runner.js
+test-security.js
 
 # Node modules
 node_modules/

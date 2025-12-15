@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0] - 2025-12-15
+### Added
+- Added support for Spring Security.
+- Users can now choose to include Spring Security when generating a project.
+- Automatically adds `spring-boot-starter-security` and `spring-security-test` dependencies.
+- Generates a default `SecurityConfig` class with Basic Auth enabled and CSRF disabled (for development).
+
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

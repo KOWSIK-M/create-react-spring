@@ -40,6 +40,7 @@
 - 🔧 **Build Tools**: Maven or Gradle (with wrappers included)
 - 📦 **Packaging**: JAR or WAR deployment options
 - 🎯 **Java Versions**: 17 or 21
+- 🔒 **Security**: Optional Spring Security integration
 
 ### Project Structure
 - 📁 **Monorepo Style**: Organized `client/` and `server/` directories
@@ -79,10 +80,12 @@ The CLI will guide you through configuration:
 ? Select Packaging: Jar
 ? Group ID: com.mycompany
 ? Java Version: 17
+? Add Spring Security?: Yes
 
 📁 Creating project my-awesome-app...
    - Frontend: vite → copied to client/
    - Backend: java (maven) → configuring for com.mycompany.myawesomeapp...
+   - Security: enabled -> adding Spring Security...
 
 ✔ Project created successfully!
 ```
@@ -197,6 +200,13 @@ java --version    # Should be >= 17
 #### Packaging
 - **JAR**: Embedded server, easy deployment
 - **WAR**: Traditional servlet container deployment (Tomcat, etc.)
+
+#### Security
+- **Spring Security**: Optional integration
+  - Adds `spring-boot-starter-security`
+  - Configures Basic Authentication
+  - Disables CSRF (for easier development)
+  - users can be added via `application.properties` or `SecurityConfig`
 
 ### Advanced Configuration
 
