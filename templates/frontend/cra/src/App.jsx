@@ -7,7 +7,7 @@ export default function App() {
 
   const checkBackend = async () => {
     try {
-      const res = await fetch("http://localhost:8080/");
+      const res = await fetch("/api");
 
       if (res.status === 404) {
         setStatus({ msg: "Backend is running", type: "success" });

@@ -60,6 +60,13 @@ Run directly with npx (no global install needed):
 npx react-springboot-cli [project-name]
 ```
 
+Or install globally via npm:
+
+```bash
+npm install -g react-springboot-cli
+react-springboot-cli [project-name]
+```
+
 ### Interactive Setup
 
 The CLI will guide you through configuration:
