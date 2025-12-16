@@ -1,6 +1,10 @@
 # Changelog
 
 ## [1.2.0] - 2025-12-15
+### Renamed
+- Renamed package from `create-react-spring` to `react-springboot-cli`.
+- Updated CLI binary command to `react-springboot-cli`.
+
 ### Added
 - Added support for Spring Security.
 - Users can now choose to include Spring Security when generating a project.
@@ -51,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🎉 Initial Release
 
-First public release of create-react-spring - the fastest way to create React + Spring Boot full-stack applications.
+First public release of react-springboot-cli - the fastest way to create React + Spring Boot full-stack applications.
 
 ### ✨ Added
 
@@ -158,9 +162,9 @@ First public release of create-react-spring - the fastest way to create React + 
 
 ### Contributing
 
-If you'd like to suggest features or report bugs, please visit our [GitHub Issues](https://github.com/KOWSIK-M/create-react-spring/issues).
+If you'd like to suggest features or report bugs, please visit our [GitHub Issues](https://github.com/KOWSIK-M/react-springboot-cli/issues).
 
 ---
 
-[1.0.0]: https://github.com/KOWSIK-M/create-react-spring/releases/tag/v1.0.0
-[Unreleased]: https://github.com/KOWSIK-M/create-react-spring/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/KOWSIK-M/react-springboot-cli/releases/tag/v1.0.0
+[Unreleased]: https://github.com/KOWSIK-M/react-springboot-cli/compare/v1.0.0...HEAD

@@ -1,11 +1,11 @@
 {
-  "name": "create-react-spring",
+  "name": "react-springboot-cli",
   "version": "1.2.0",
   "description": "CLI tool to generate a React + Spring Boot full-stack project.",
   "type": "module",
   "main": "bin/index.js",
   "bin": {
-    "create-react-spring": "./bin/index.js"
+    "react-springboot-cli": "./bin/index.js"
   },
   "files": [
     "bin",
@@ -28,9 +28,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KOWSIK-M/create-react-spring.git"
+    "url": "https://github.com/KOWSIK-M/react-springboot-cli.git"
   },
-  "homepage": "https://github.com/KOWSIK-M/create-react-spring#readme",
+  "homepage": "https://github.com/KOWSIK-M/react-springboot-cli#readme",
   "engines": {
     "node": ">=18.0.0"
   },

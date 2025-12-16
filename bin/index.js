@@ -7,7 +7,7 @@ import fs from "fs-extra";
 import { questions, getProjectNameQuestion } from "./prompts.js";
 import { generateProject } from "./generator.js";
 
-console.log(chalk.cyan("\n🚀 create-react-spring\n"));
+console.log(chalk.cyan("\n🚀 react-springboot-cli\n"));
 
 const args = process.argv.slice(2);
 let projectNameArg = args[0];

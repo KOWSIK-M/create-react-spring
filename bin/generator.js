@@ -503,7 +503,7 @@ function createHelpFile(targetDir, projectName, answers, artifactId) {
   const helpContent = `
 # ${projectName}
 
-Generated with **create-react-spring**.
+Generated with **react-springboot-cli**.
 
 ## Stack
 - **Client**: ${
