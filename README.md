@@ -6,10 +6,11 @@
 ![License](https://img.shields.io/npm/l/react-springboot-cli)
 ![Node Version](https://img.shields.io/node/v/react-springboot-cli)
 ![Downloads](https://img.shields.io/npm/dt/react-springboot-cli)
+[![Website](https://img.shields.io/badge/Website-Live-blue)](https://react-springboot-cli-frontend.vercel.app/)
 
 **The fastest way to create a production-ready React + Spring Boot full-stack application**
 
-[Quick Start](#-quick-start) • [Features](#-features) • [Documentation](#-documentation) • [Examples](#-examples) • [Troubleshooting](#-troubleshooting)
+[Website](https://react-springboot-cli-frontend.vercel.app/) • [Quick Start](#-quick-start) • [Features](#-features) • [Documentation](#-documentation) • [Examples](#-examples) • [Troubleshooting](#-troubleshooting)
 
 </div>
 
@@ -767,36 +768,8 @@ react-springboot-cli my-test-app
 
 ## 📜 License
 
-# Create React Spring
 
-<div align="center">
-
-![NPM Version](https://img.shields.io/npm/v/react-springboot-cli)
-![License](https://img.shields.io/npm/l/react-springboot-cli)
-![Node Version](https://img.shields.io/node/v/react-springboot-cli)
-![Downloads](https://img.shields.io/npm/dt/react-springboot-cli)
-
-**The fastest way to create a production-ready React + Spring Boot full-stack application**
-
-[Quick Start](#-quick-start) • [Features](#-features) • [Documentation](#-documentation) • [Examples](#-examples) • [Troubleshooting](#-troubleshooting)
-
-</div>
-
----
-
-## 🎯 Overview
-
-**react-springboot-cli** is a powerful CLI tool that instantly bootstraps a complete full-stack project with a **React** frontend and **Spring Boot** backend. Stop wasting hours on project setup and configuration - get a production-ready monorepo structure in seconds.
-
-### Why react-springboot-cli?
-
-✅ **Save Time**: Go from zero to coding in under a minute  
-✅ **Best Practices**: Pre-configured with industry-standard tools and structure  
-✅ **Flexibility**: Choose your preferred languages and build tools  
-✅ **Full Control**: No hidden abstractions - you own all the code  
-✅ **Production Ready**: Includes build wrappers, proper packaging, and deployment config
-
----
+Thank you for contributing! 🙏
 
 ## ✨ Features
 

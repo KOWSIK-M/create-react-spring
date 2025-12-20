@@ -30,7 +30,7 @@
     "type": "git",
     "url": "https://github.com/KOWSIK-M/react-springboot-cli.git"
   },
-  "homepage": "https://github.com/KOWSIK-M/react-springboot-cli#readme",
+  "homepage": "https://react-springboot-cli-frontend.vercel.app/",
   "engines": {
     "node": ">=18.0.0"
   },
