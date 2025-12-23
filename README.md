@@ -33,14 +33,15 @@
 ## ✨ Features
 
 ### Frontend Options
-- 🚀 **Vite** (Recommended) - Lightning-fast HMR and modern build tooling
-- ⚛️ **Create React App** - Battle-tested, stable React setup
+- 🚀 **Vite** (Recommended) - Lightning-fast HMR and modern build tooling (Vite 7)
+- ⚛️ **Create React App** - Battle-tested, stable React setup (React 19)
 
 ### Backend Options
 - ☕ **Languages**: Java, Kotlin, or Groovy
+- 🍃 **Spring Boot**: 4.0.1, 3.5.9, or 3.4.0
 - 🔧 **Build Tools**: Maven or Gradle (with wrappers included)
 - 📦 **Packaging**: JAR or WAR deployment options
-- 🎯 **Java Versions**: 17 or 21
+- 🎯 **Java Versions**: 17, 21, or 25 (LTS)
 - 🔒 **Security**: Optional Spring Security integration
 
 ### Project Structure
@@ -81,7 +82,8 @@ The CLI will guide you through configuration:
 ? Select Build Tool: Maven
 ? Select Packaging: Jar
 ? Group ID: com.mycompany
-? Java Version: 17
+? Select Spring Boot Version: 4.0.1 (Latest Stable)
+? Java Version: 25
 ? Add Spring Security?: Yes
 
 📁 Creating project my-awesome-app...
@@ -155,14 +157,14 @@ gradlew.bat bootRun      # Windows
 Before using react-springboot-cli, ensure you have:
 
 - **Node.js**: Version 18.0.0 or higher ([Download](https://nodejs.org/))
-- **Java Development Kit (JDK)**: Version 17 or higher ([Download](https://adoptium.net/))
+- **Java Development Kit (JDK)**: Version 17 or higher (JDK 25 recommended for Spring Boot 4.x) ([Download](https://adoptium.net/))
 - **npm** or **yarn**: Package manager (comes with Node.js)
 
 ### Verify Installation
 
 ```bash
 node --version    # Should be >= 18.0.0
-java --version    # Should be >= 17
+java --version    # Should be >= 17 (25 for latest features)
 ```
 
 ---
@@ -223,8 +225,9 @@ The Group ID follows Java package naming conventions:
 
 #### Java Version Selection
 
-- **Java 17**: LTS (Long-Term Support) - Recommended for most projects
-- **Java 21**: Latest LTS - For cutting-edge features
+- **Java 17**: LTS (Long-Term Support) - Recommended for compatibility
+- **Java 21**: LTS - Modern features and performance
+- **Java 25**: Latest LTS - Cutting-edge features (Spring Boot 4.x)
 
 ---
 
@@ -359,6 +362,26 @@ rmdir /s my-app  # Windows
 
 **Solution**:
 ```bash
+cd client
+npm install
+npm run dev  # or npm start for CRA
+```
+
+---
+
+#### ❌ Backend error: "JAVA_HOME is not set"
+
+**Problem**: Java environment variable not configured.
+
+**Solution**:
+
+**Windows:**
+```powershell
+# Find Java installation
+where java
+
+# Set JAVA_HOME (example path)
+setx JAVA_HOME "C:\Program Files\Java\jdk-17"
 cd client
 npm install
 npm run dev  # or npm start for CRA
@@ -545,7 +568,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '25'
           cache: 'maven'  # or 'gradle'
       
       - name: Build with Maven
@@ -652,12 +675,12 @@ CMD ["nginx", "-g", "daemon off;"]
 **Backend Dockerfile** (`server/Dockerfile`):
 
 ```dockerfile
-FROM openjdk:17-jdk-alpine AS build
+FROM openjdk:25-jdk-alpine AS build
 WORKDIR /app
 COPY . .
 RUN ./mvnw clean package -DskipTests
 
-FROM openjdk:17-jre-alpine
+FROM openjdk:25-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
@@ -668,774 +691,26 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 ## 📊 Version History & Changelog
 
-### v1.0.0 (Current)
+### v1.3.0 (Current)
 
-**Release Date**: 2025-01-12
+**Release Date**: 2025-12-23
 
 #### ✨ Features
-- Initial public release
-- Frontend support: Vite and Create React App
-- Backend support: Java, Kotlin, Groovy
-- Build tool support: Maven and Gradle
-- Packaging options: JAR and WAR
-- Java version selection: 17 and 21
-- Auto-generated project structure
-- Build wrappers included (mvnw, gradlew)
-- Cross-platform support (Windows, Mac, Linux)
-- Interactive CLI with colored output
-- Auto-generated HELP.md documentation
-
-#### 🔧 Technical Details
-- Node.js requirement: >= 18.0.0
-- Dependencies: inquirer, chalk, fs-extra
-- License: MIT
-
-#### 📦 Package Info
-- Bundle size: ~2.5MB (including all templates)
-- Install time: ~3-5 seconds
-- Project generation time: ~1-2 seconds
+- **Java 25 Support**: Full integration with the latest LTS release.
+- **Spring Boot 4.0.1 Integration**: Updated templates for next-gen Spring.
+- **Modern Dependencies**: React 19 (19.2.3) and Vite 7 (7.3.0) by default.
+- **Runtime Checks**: Proactive Java version validation to ensure build compatibility.
+- **Improved Templates**: Standardized version handling via placeholders.
 
 ---
+
+### v1.0.0
 
 ### Upcoming Features (Roadmap)
 
 #### v1.1.0 (Planned)
 - [ ] TypeScript support for frontend
-- [ ] Spring Boot version selection
-- [ ] Database configuration (PostgreSQL, MySQL, H2)
-- [ ] Docker configuration generation
-- [ ] Testing framework setup
-
-#### v1.2.0 (Planned)
-- [ ] Authentication templates (Spring Security + JWT)
-- [ ] API documentation (Swagger/OpenAPI)
-- [ ] Multiple frontend frameworks (Vue, Angular)
-- [ ] Microservices template option
-
-#### v2.0.0 (Future)
-- [ ] GraphQL support
-- [ ] Cloud deployment templates (AWS, Azure, GCP)
-- [ ] Kubernetes manifests generation
-- [ ] Monitoring setup (Prometheus, Grafana)
-
-Want a feature? [Request it here](https://github.com/KOWSIK-M/react-springboot-cli/issues/new?labels=enhancement)!
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how you can help:
-
-### Reporting Bugs
-
-Found a bug? [Open an issue](https://github.com/KOWSIK-M/react-springboot-cli/issues/new) with:
-- Clear description of the problem
-- Steps to reproduce
-- Expected vs actual behavior
-- Your environment (OS, Node version, Java version)
-
-### Suggesting Features
-
-Have an idea? [Open a discussion](https://github.com/KOWSIK-M/react-springboot-cli/discussions/new) or feature request!
-
-### Pull Requests
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Development Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/KOWSIK-M/react-springboot-cli.git
-cd react-springboot-cli
-
-# Install dependencies
-npm install
-
-# Test locally
-node bin/index.js test-project
-
-# Link for local testing
-npm link
-react-springboot-cli my-test-app
-```
-
----
-
-## 📜 License
-
-
-Thank you for contributing! 🙏
-
-## ✨ Features
-
-### Frontend Options
-- 🚀 **Vite** (Recommended) - Lightning-fast HMR and modern build tooling
-- ⚛️ **Create React App** - Battle-tested, stable React setup
-
-### Backend Options
-- ☕ **Languages**: Java, Kotlin, or Groovy
-- 🔧 **Build Tools**: Maven or Gradle (with wrappers included)
-- 📦 **Packaging**: JAR or WAR deployment options
-- 🎯 **Java Versions**: 17 or 21
-- 🔒 **Security**: Optional Spring Security integration
-
-### Project Structure
-- 📁 **Monorepo Style**: Organized `client/` and `server/` directories
-- 🔄 **Auto-Configuration**: Templates parameterized with your choices
-- 📚 **Documentation**: Auto-generated `HELP.md` with stack-specific instructions
-- ✅ **Ready to Run**: Both frontend and backend work immediately
-
----
-
-## 🚀 Quick Start
-
-### Installation
-
-Run directly with npx (no global install needed):
-
-```bash
-npx react-springboot-cli [project-name]
-```
-
-### Interactive Setup
-
-The CLI will guide you through configuration:
-
-```
-🚀 react-springboot-cli
-
-? Project name: my-awesome-app
-? Select Frontend Framework: Vite (Recommended)
-? Select Backend Language: Java
-? Select Build Tool: Maven
-? Select Packaging: Jar
-? Group ID: com.mycompany
-? Java Version: 17
-? Add Spring Security?: Yes
-
-📁 Creating project my-awesome-app...
-   - Frontend: vite → copied to client/
-   - Backend: java (maven) → configuring for com.mycompany.myawesomeapp...
-   - Security: enabled -> adding Spring Security...
-
-✔ Project created successfully!
-```
-
-### Project Structure
-
-Your generated project will look like this:
-
-```
-my-awesome-app/
-├── client/              # React Frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   ├── vite.config.js   # or package.json for CRA
-│   └── ...
-├── server/              # Spring Boot Backend
-│   ├── src/
-│   │   └── main/
-│   │       └── java/    # or kotlin/groovy
-│   │           └── com/
-│   │               └── mycompany/
-│   │                   └── myawesomeapp/
-│   │                       ├── DemoApplication.java
-│   │                       └── HelloController.java
-│   ├── pom.xml          # or build.gradle
-│   ├── mvnw             # Maven wrapper
-│   └── ...
-├── HELP.md              # Stack-specific quickstart guide
-└── README.md
-```
-
-### Running Your Project
-
-**Frontend:**
-```bash
-cd my-awesome-app/client
-npm install
-npm run dev              # Vite: http://localhost:5173
-# or npm start           # CRA: http://localhost:3000
-```
-
-**Backend:**
-```bash
-cd my-awesome-app/server
-
-# Maven
-./mvnw spring-boot:run   # Unix/Mac
-mvnw.cmd spring-boot:run # Windows
-
-# Gradle
-./gradlew bootRun        # Unix/Mac
-gradlew.bat bootRun      # Windows
-
-# Server runs on http://localhost:8080
-```
-
----
-
-## 📋 Prerequisites
-
-Before using react-springboot-cli, ensure you have:
-
-- **Node.js**: Version 18.0.0 or higher ([Download](https://nodejs.org/))
-- **Java Development Kit (JDK)**: Version 17 or higher ([Download](https://adoptium.net/))
-- **npm** or **yarn**: Package manager (comes with Node.js)
-
-### Verify Installation
-
-```bash
-node --version    # Should be >= 18.0.0
-java --version    # Should be >= 17
-```
-
----
-
-## 📖 Documentation
-
-### Command Line Options
-
-| Argument | Description | Example |
-|----------|-------------|---------|
-| `[project-name]` | Specify project name directly | `npx react-springboot-cli my-app` |
-| _(none)_ | Interactive mode (prompts for all options) | `npx react-springboot-cli` |
-
-### Configuration Options
-
-#### Frontend Framework
-- **Vite** (Recommended)
-  - ⚡ Ultra-fast Hot Module Replacement (HMR)
-  - 🎯 Optimized for modern development
-  - 📦 Smaller bundle sizes
-  - 🔧 Better TypeScript support
-
-- **Create React App**
-  - 🛡️ Battle-tested and stable
-  - 📚 Extensive documentation
-  - 🔄 Familiar to most React developers
-
-#### Backend Language
-- **Java**: Industry-standard, extensive ecosystem
-- **Kotlin**: Modern, concise, null-safe
-- **Groovy**: Dynamic, flexible, powerful DSL
-
-#### Build Tool
-- **Maven**: Convention-over-configuration, XML-based
-- **Gradle**: Flexible, Groovy/Kotlin DSL, faster builds
-
-#### Packaging
-- **JAR**: Embedded server, easy deployment
-- **WAR**: Traditional servlet container deployment (Tomcat, etc.)
-
-#### Security
-- **Spring Security**: Optional integration
-  - Adds `spring-boot-starter-security`
-  - Configures Basic Authentication
-  - Disables CSRF (for easier development)
-  - users can be added via `application.properties` or `SecurityConfig`
-
-### Advanced Configuration
-
-#### Custom Group ID
-
-The Group ID follows Java package naming conventions:
-
-```
-✅ Valid:   com.mycompany, org.example, io.github.username
-❌ Invalid: MyCompany, com.My-Company, 123company
-```
-
-#### Java Version Selection
-
-- **Java 17**: LTS (Long-Term Support) - Recommended for most projects
-- **Java 21**: Latest LTS - For cutting-edge features
-
----
-
-## 🎨 Examples
-
-### Example 1: React + Java + Maven
-
-```bash
-npx react-springboot-cli my-store
-
-# Choices:
-# - Frontend: Vite
-# - Backend: Java
-# - Build Tool: Maven
-# - Packaging: Jar
-# - Group ID: com.mystore
-# - Java Version: 17
-```
-
-**Result**: E-commerce starter with Vite HMR and Spring Boot REST API
-
-### Example 2: React + Kotlin + Gradle
-
-```bash
-npx react-springboot-cli blog-platform
-
-# Choices:
-# - Frontend: Vite
-# - Backend: Kotlin
-# - Build Tool: Gradle
-# - Packaging: Jar
-# - Group ID: io.myblog
-# - Java Version: 21
-```
-
-**Result**: Modern blog platform with Kotlin's concise syntax
-
-### Example 3: Legacy CRA + Groovy + WAR
-
-```bash
-npx react-springboot-cli enterprise-app
-
-# Choices:
-# - Frontend: Create React App
-# - Backend: Groovy
-# - Build Tool: Maven
-# - Packaging: War
-# - Group ID: com.enterprise
-# - Java Version: 17
-```
-
-**Result**: Enterprise application deployable to existing Tomcat servers
-
----
-
-## 🏗️ Project Configuration Details
-
-### Auto-Generated Files
-
-react-springboot-cli automatically configures:
-
-✅ **Package Structure**: Creates proper Java package hierarchy from your Group ID  
-✅ **Build Wrappers**: Includes `mvnw`/`gradlew` so projects work without global installations  
-✅ **CORS Configuration**: Pre-configured for local development (client ↔ server)  
-✅ **ServletInitializer**: Auto-added for WAR packaging  
-✅ **Sample Controller**: Working REST endpoint at `/api/hello`  
-
-### Connecting Frontend to Backend
-
-**Example React Component:**
-
-```jsx
-// client/src/App.jsx
-import { useState, useEffect } from 'react';
-
-function App() {
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    fetch('http://localhost:8080/api/hello')
-      .then(res => res.text())
-      .then(data => setMessage(data));
-  }, []);
-
-  return <h1>{message}</h1>;
-}
-
-export default App;
-```
-
-**Example Spring Controller:**
-
-```java
-// server/src/main/java/com/example/demo/HelloController.java
-@RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5173") // Vite dev server
-public class HelloController {
-    
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello from Spring Boot!";
-    }
-}
-```
-
----
-
-## 🔧 Troubleshooting
-
-### Common Issues and Solutions
-
-#### ❌ "Folder already exists!"
-
-**Problem**: Target directory already contains a project with the same name.
-
-**Solution**:
-```bash
-# Choose a different name
-npx react-springboot-cli my-app-v2
-
-# Or remove the existing directory
-rm -rf my-app  # Unix/Mac
-rmdir /s my-app  # Windows
-```
-
----
-
-#### ❌ Frontend won't start: "ENOENT: no such file or directory"
-
-**Problem**: Dependencies not installed.
-
-**Solution**:
-```bash
-cd client
-npm install
-npm run dev  # or npm start for CRA
-```
-
----
-
-#### ❌ Backend error: "JAVA_HOME is not set"
-
-**Problem**: Java environment variable not configured.
-
-**Solution**:
-
-**Windows:**
-```powershell
-# Find Java installation
-where java
-
-# Set JAVA_HOME (example path)
-setx JAVA_HOME "C:\Program Files\Java\jdk-17"
-```
-
-**Mac/Linux:**
-```bash
-# Add to ~/.bashrc or ~/.zshrc
-export JAVA_HOME=$(/usr/libexec/java_home)  # Mac
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk  # Linux
-```
-
-Restart your terminal after setting `JAVA_HOME`.
-
----
-
-#### ❌ "mvnw: Permission denied" (Unix/Mac)
-
-**Problem**: Maven wrapper not executable.
-
-**Solution**:
-```bash
-cd server
-chmod +x mvnw
-./mvnw spring-boot:run
-```
-
----
-
-#### ❌ Backend error: "'groupId' with value '{{GROUP_ID}}'"
-
-**Problem**: Template placeholders not replaced (rare bug).
-
-**Solution**: This shouldn't happen with the latest version. If it does:
-1. Delete the generated `server/` directory
-2. Re-run `npx react-springboot-cli@latest`
-3. If issue persists, [report a bug](https://github.com/KOWSIK-M/react-springboot-cli/issues)
-
----
-
-#### ❌ Port 8080 already in use
-
-**Problem**: Another application is using the default Spring Boot port.
-
-**Solution**: Change the port in `server/src/main/resources/application.properties`:
-
-```properties
-server.port=8081
-```
-
-Then update frontend API calls to use `http://localhost:8081`.
-
----
-
-#### ❌ CORS errors in browser console
-
-**Problem**: Frontend can't access backend due to CORS policy.
-
-**Solution**: Add CORS configuration to your Spring controller:
-
-```java
-@CrossOrigin(origins = "http://localhost:5173")  // Vite
-// or
-@CrossOrigin(origins = "http://localhost:3000")  // CRA
-```
-
-For production, configure proper CORS in `WebConfig`:
-
-```java
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
-                .allowedOrigins("https://your-production-domain.com")
-                .allowedMethods("GET", "POST", "PUT", "DELETE");
-    }
-}
-```
-
----
-
-#### ❌ Gradle build fails: "Could not find method kotlin() for arguments"
-
-**Problem**: Gradle version mismatch.
-
-**Solution**: Use the included wrapper (recommended):
-```bash
-./gradlew --version  # Check version
-./gradlew clean build  # Use wrapper, not global gradle
-```
-
----
-
-### Getting Help
-
-Still stuck? Here's how to get help:
-
-1. **Check HELP.md**: Your generated project includes stack-specific guidance
-2. **Search Issues**: [GitHub Issues](https://github.com/KOWSIK-M/react-springboot-cli/issues)
-3. **Ask Questions**: [Start a Discussion](https://github.com/KOWSIK-M/react-springboot-cli/discussions)
-4. **Report Bugs**: [Open an Issue](https://github.com/KOWSIK-M/react-springboot-cli/issues/new)
-
-When reporting issues, include:
-- Node version: `node --version`
-- Java version: `java --version`
-- OS: Windows/Mac/Linux
-- Full error message
-- Steps to reproduce
-
----
-
-## 🚀 CI/CD Integration
-
-### GitHub Actions
-
-Create `.github/workflows/ci.yml` in your project:
-
-```yaml
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  frontend:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./client
-    
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: client/package-lock.json
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Build
-        run: npm run build
-      
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: frontend-build
-          path: client/dist  # or client/build for CRA
-
-  backend:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./server
-    
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-          cache: 'maven'  # or 'gradle'
-      
-      - name: Build with Maven
-        run: ./mvnw clean package -DskipTests
-      
-      # For Gradle, use:
-      # - name: Build with Gradle
-      #   run: ./gradlew build -x test
-      
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: backend-jar
-          path: server/target/*.jar  # or server/build/libs/*.jar for Gradle
-```
-
----
-
-### GitLab CI
-
-Create `.gitlab-ci.yml` in your project:
-
-```yaml
-stages:
-  - build
-  - test
-  - deploy
-
-variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-
-frontend-build:
-  stage: build
-  image: node:18
-  before_script:
-    - cd client
-    - npm ci
-  script:
-    - npm run build
-  artifacts:
-    paths:
-      - client/dist/  # or client/build/ for CRA
-    expire_in: 1 hour
-
-backend-build:
-  stage: build
-  image: openjdk:17-jdk
-  before_script:
-    - cd server
-  script:
-    - ./mvnw clean package -DskipTests
-  artifacts:
-    paths:
-      - server/target/*.jar
-    expire_in: 1 hour
-  cache:
-    paths:
-      - .m2/repository
-```
-
----
-
-### Docker Deployment
-
-**Docker Compose** (`docker-compose.yml`):
-
-```yaml
-version: '3.8'
-
-services:
-  frontend:
-    build: ./client
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
-    environment:
-      - REACT_APP_API_URL=http://localhost:8080
-
-  backend:
-    build: ./server
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=production
-```
-
-**Frontend Dockerfile** (`client/Dockerfile`):
-
-```dockerfile
-FROM node:18-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-**Backend Dockerfile** (`server/Dockerfile`):
-
-```dockerfile
-FROM openjdk:17-jdk-alpine AS build
-WORKDIR /app
-COPY . .
-RUN ./mvnw clean package -DskipTests
-
-FROM openjdk:17-jre-alpine
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
-```
-
----
-
-## 📊 Version History & Changelog
-
-### v1.0.0 (Current)
-
-**Release Date**: 2025-01-12
-
-#### ✨ Features
-- Initial public release
-- Frontend support: Vite and Create React App
-- Backend support: Java, Kotlin, Groovy
-- Build tool support: Maven and Gradle
-- Packaging options: JAR and WAR
-- Java version selection: 17 and 21
-- Auto-generated project structure
-- Build wrappers included (mvnw, gradlew)
-- Cross-platform support (Windows, Mac, Linux)
-- Interactive CLI with colored output
-- Auto-generated HELP.md documentation
-
-#### 🔧 Technical Details
-- Node.js requirement: >= 18.0.0
-- Dependencies: inquirer, chalk, fs-extra
-- License: MIT
-
-#### 📦 Package Info
-- Bundle size: ~2.5MB (including all templates)
-- Install time: ~3-5 seconds
-- Project generation time: ~1-2 seconds
-
----
-
-### Upcoming Features (Roadmap)
-
-#### v1.1.0 (Planned)
-- [ ] TypeScript support for frontend
-- [ ] Spring Boot version selection
+- [x] Spring Boot version selection
 - [ ] Database configuration (PostgreSQL, MySQL, H2)
 - [ ] Docker configuration generation
 - [ ] Testing framework setup

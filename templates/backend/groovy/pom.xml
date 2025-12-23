@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.0</version>
+		<version>{{SPRING_BOOT_VERSION}}</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>{{GROUP_ID}}</groupId>
@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>{{JAVA_VERSION}}</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,7 +55,7 @@
 			<plugin>
 				<groupId>org.codehaus.gmavenplus</groupId>
 				<artifactId>gmavenplus-plugin</artifactId>
-				<version>1.13.1</version>
+				<version>4.2.1</version>
 				<executions>
 					<execution>
 						<goals>

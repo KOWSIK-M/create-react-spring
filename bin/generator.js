@@ -6,8 +6,13 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+import { execSync } from "child_process";
+
 export async function generateProject(projectName, answers, targetDir) {
   try {
+    // Check Java version compatibility
+    checkJavaVersion(answers.javaVersion);
+
     console.log(chalk.yellow(`📁 Creating project ${projectName}...`));
 
     // Create project root
@@ -203,18 +208,6 @@ function processBackendFiles(
           .replace(/{{ARTIFACT_ID}}/g, artifactId)
           .replace(/{{JAVA_VERSION}}/g, answers.javaVersion)
           .replace(/{{SPRING_BOOT_VERSION}}/g, answers.springBootVersion)
-          .replace(
-            /JavaLanguageVersion\.of\(17\)/g,
-            `JavaLanguageVersion.of(${answers.javaVersion})`
-          )
-          .replace(
-            /<version>3\.2\.1<\/version>/g,
-            `<version>${answers.springBootVersion}</version>`
-          ) // Maven Spring Boot version
-          .replace(
-            /springBootVersion = "3\.2\.1"/g,
-            `springBootVersion = "${answers.springBootVersion}"`
-          ) // Gradle
           .replace(
             /<packaging>jar<\/packaging>/g,
             `<packaging>${answers.packaging}</packaging>`
@@ -695,6 +688,61 @@ class SecurityConfig {
   }
 
   fs.writeFileSync(path.join(configDir, `SecurityConfig.${fileExtension}`), content);
+}
+
+/**
+ * Check if installed Java version is sufficient
+ */
+function checkJavaVersion(requiredVersion) {
+  try {
+    // java -version output is printed to stderr by default on many JDKs
+    let output;
+    try {
+        output = execSync("java -version 2>&1", { encoding: "utf8" });
+    } catch (e) {
+        // If it returns non-zero, it might still have output in stdout/stderr if we could capture it,
+        // but here we just assume failure if it throws.
+        output = ""; 
+    }
+    
+    // Output formats: 'java version "1.8.0_202"', 'openjdk version "17.0.1"'
+    // Regex for version string: version "X.Y.Z"
+    const match = output.match(/version "(\d+)/);
+    
+    // Handle 1.8 as 8
+    let installedVersion = 0;
+    if (match && match[1]) {
+      installedVersion = parseInt(match[1], 10);
+      if (installedVersion === 1) {
+          const detailMatch = output.match(/version "1\.(\d+)/);
+          if (detailMatch && detailMatch[1]) {
+              installedVersion = parseInt(detailMatch[1], 10);
+          }
+      }
+    }
+
+    if (installedVersion > 0 && installedVersion < parseInt(requiredVersion, 10)) {
+       console.log(
+        chalk.yellow(
+          `\n⚠️  WARNING: You selected Java ${requiredVersion}, but your installed Java version appears to be ${installedVersion}.`
+        )
+      );
+      console.log(
+        chalk.yellow(
+          `   The generated project may fail to build. Please upgrade your JDK or select a compatible version.\n`
+        )
+      );
+    }
+  } catch (e) {
+     // If java is not installed or fails, we can't check. 
+     // Usually better to warn if we can't verify? Or silent?
+     // Let's print a mild warning that we couldn't verify.
+      console.log(
+        chalk.gray(
+          `\n(Could not verify installed Java version. Ensure you have JDK ${requiredVersion}+ installed.)`
+        )
+      );
+  }
 }
 
 /**

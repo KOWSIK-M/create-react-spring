@@ -134,18 +134,18 @@ export const questions = [
     name: "springBootVersion",
     message: "Spring Boot Version:",
     choices: [
-      { name: "3.2.1 (Latest Stable)", value: "3.2.1" },
-      { name: "3.1.7 (Previous Stable)", value: "3.1.7" },
-      { name: "3.0.13 (Legacy)", value: "3.0.13" }
+      { name: "4.0.1 (Latest Stable)", value: "4.0.1" },
+      { name: "3.5.9 (Previous Stable)", value: "3.5.9" },
+      { name: "3.4.0 (Legacy)", value: "3.4.0" }
     ],
-    default: "3.2.1"
+    default: "4.0.1"
   },
   {
     type: "list",
     name: "javaVersion",
     message: "Java Version:",
-    choices: ["17", "21"],
-    default: "17"
+    choices: ["25", "21", "17"],
+    default: "25"
   }
 ];
 
